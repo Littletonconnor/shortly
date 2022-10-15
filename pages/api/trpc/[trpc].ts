@@ -10,7 +10,6 @@ export const appRouter = trpc
       slug: z.string(),
     }),
     async resolve({ input }) {
-      console.log("input", input);
       const count = await prisma.shortner.count({
         where: {
           slug: input.slug,

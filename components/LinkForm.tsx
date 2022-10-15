@@ -1,10 +1,19 @@
-import React, {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  useState,
-} from "react";
+import { useState } from "react";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import { trpc } from "../utils/trpc";
+
+function validURL(url: string) {
+  const pattern = new RegExp(
+    "^(https?:\\/\\/)" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  );
+  return pattern.test(url);
+}
 
 interface Form {
   url: string;
@@ -13,7 +22,7 @@ interface Form {
 
 function LinkForm() {
   const [form, setForm] = useState<Form>({ slug: "", url: "" });
-  const [copiedText, copy] = useCopyToClipboard();
+  const [, copy] = useCopyToClipboard();
 
   const slugCheck = trpc.useQuery(["slugCheck", { slug: form.slug }], {
     refetchOnReconnect: false,
@@ -23,9 +32,12 @@ function LinkForm() {
 
   const createSlug = trpc.useMutation(["createShortner"]);
 
-  console.log("CREATE SLUG", createSlug);
-
-  const isDisabled = slugCheck?.data?.used || !form.slug || !form.url;
+  const isDisabled =
+    slugCheck?.data?.used ||
+    !form.slug ||
+    !form.url ||
+    slugCheck?.isLoading ||
+    !validURL(form.url);
 
   return (
     <div className="w-full mx-auto max-w-md md:max-w-lg">
@@ -73,7 +85,7 @@ function LinkForm() {
               <input
                 className="p-2 mt-2 block w-full rounded border-none bg-white bg-[hsl(231deg 84% 67%/var(--tw-bg-opacity))] px-4 py-3 font-medium focus:outline-none focus:ring-gray-300 focus-ring:ring text-gray-900 transition focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-gray-700"
                 placeholder="https://google.com"
-                type="text"
+                type="url"
                 id="link"
                 onChange={(e) => {
                   setForm({ ...form, url: e.target.value });
@@ -85,6 +97,7 @@ function LinkForm() {
                 <button
                   onClick={() => {
                     copy(`https://shortly.vercel.com/${form.slug}`);
+                    setForm({ slug: "", url: "" });
                     createSlug.reset();
                   }}
                   className="w-full rounded-md bg-green-600 transition-all px-4 py-3 font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-gray-700"

@@ -1,3 +1,3 @@
 # Shortly
 
-A simple link shortner using NextJs Middleware
+A simple link shortener using NextJs Middleware

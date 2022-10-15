@@ -12,7 +12,7 @@ export default async function handler(
     return res.status(404).json({ message: "Not Found" });
   }
 
-  const data = await prisma.shortner.findFirst({
+  const data = await prisma.shortener.findFirst({
     where: {
       slug: {
         equals: slug,

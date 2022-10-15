@@ -9,7 +9,7 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
-model Shortner {
+model Shortener {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   url       String

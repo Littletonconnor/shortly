@@ -30,7 +30,7 @@ function LinkForm() {
     refetchOnWindowFocus: false,
   });
 
-  const createSlug = trpc.useMutation(["createShortner"]);
+  const createSlug = trpc.useMutation(["createShortener"]);
 
   const isDisabled =
     slugCheck?.data?.used ||
@@ -51,7 +51,7 @@ function LinkForm() {
           }}
         >
           <fieldset>
-            <h2 className="mb-2 text-3xl font-bold">A Simple Link Shortner</h2>
+            <h2 className="mb-2 text-3xl font-bold">A Simple Link Shortener</h2>
             <div className="mt-8">
               <label
                 className="text-sm font-medium text-gray-300"
@@ -66,7 +66,7 @@ function LinkForm() {
               ) : null}
               <input
                 className="p-2 mt-2 block w-full rounded border-none bg-white text-gray-900 transition focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-gray-700"
-                placeholder="https://shortly.vercel.com/<slug name>"
+                placeholder="https://shortly.vercel.app/<slug name>"
                 type="text"
                 id="slug"
                 onChange={(e) => {
@@ -96,7 +96,7 @@ function LinkForm() {
               {createSlug.status === "success" ? (
                 <button
                   onClick={() => {
-                    copy(`https://shortly-cwl.vercel.com/${form.slug}`);
+                    copy(`https://shortly-cwl.vercel.app/${form.slug}`);
                     setForm({ slug: "", url: "" });
                     createSlug.reset();
                   }}

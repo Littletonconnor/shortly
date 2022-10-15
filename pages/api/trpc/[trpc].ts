@@ -10,7 +10,7 @@ export const appRouter = trpc
       slug: z.string(),
     }),
     async resolve({ input }) {
-      const count = await prisma.shortner.count({
+      const count = await prisma.shortener.count({
         where: {
           slug: input.slug,
         },
@@ -19,14 +19,14 @@ export const appRouter = trpc
       return { used: count > 0 };
     },
   })
-  .mutation("createShortner", {
+  .mutation("createShortener", {
     input: z.object({
       slug: z.string(),
       url: z.string(),
     }),
     async resolve({ input }) {
       try {
-        await prisma.shortner.create({
+        await prisma.shortener.create({
           data: {
             slug: input.slug,
             url: input.url,

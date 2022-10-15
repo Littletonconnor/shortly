@@ -69,6 +69,7 @@ function LinkForm() {
                 placeholder="https://shortly.vercel.app/<slug name>"
                 type="text"
                 id="slug"
+                value={form.slug}
                 onChange={(e) => {
                   setForm({ ...form, slug: e.target.value });
                   slugCheck.refetch();
@@ -86,6 +87,7 @@ function LinkForm() {
                 className="p-2 mt-2 block w-full rounded border-none bg-white bg-[hsl(231deg 84% 67%/var(--tw-bg-opacity))] px-4 py-3 font-medium focus:outline-none focus:ring-gray-300 focus-ring:ring text-gray-900 transition focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-gray-700"
                 placeholder="https://google.com"
                 type="url"
+                value={form.url}
                 id="link"
                 onChange={(e) => {
                   setForm({ ...form, url: e.target.value });

@@ -3,8 +3,9 @@ import type { NextRequest } from "next/server";
 
 export default async function handler(request: NextRequest) {
   const origin = request.nextUrl.origin;
-  const pathname = request.nextUrl.pathname;
-  const endpoint = `${origin}${pathname}`;
+  const pathname = request.nextUrl.pathname.replace(/\//g, "");
+  const endpoint = `${origin}/api/shortner/${pathname}`;
+
   const response = await fetch(endpoint);
 
   if (response.status === 404) {
@@ -17,5 +18,5 @@ export default async function handler(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/api/shortner/:path*",
+  matcher: "/:slug",
 };

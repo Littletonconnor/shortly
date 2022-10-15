@@ -96,7 +96,7 @@ function LinkForm() {
               {createSlug.status === "success" ? (
                 <button
                   onClick={() => {
-                    copy(`https://shortly.vercel.com/${form.slug}`);
+                    copy(`https://shortly-cwl.vercel.com/${form.slug}`);
                     setForm({ slug: "", url: "" });
                     createSlug.reset();
                   }}

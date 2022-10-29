@@ -98,7 +98,9 @@ function LinkForm() {
               {createSlug.status === "success" ? (
                 <button
                   onClick={() => {
-                    copy(`https://shortly-cwl.vercel.app/${form.slug}`);
+                    copy(
+                      `https://shortly-ijft8uu54-littletonconnor.vercel.app/${form.slug}`
+                    );
                     setForm({ slug: "", url: "" });
                     createSlug.reset();
                   }}
